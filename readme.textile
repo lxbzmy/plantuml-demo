@@ -1,0 +1,30 @@
+h1. A plantuml demo web project.
+
+A web API to generate plantuml SVG image.
+
+bc. POST /generate?type=SVG&text=**plantuml goes here**
+
+type also support *PNG*
+
+A web page to edit text and preview image.
+
+!{width:600px;border:1px solid gray}demo.png!
+
+
+h2. Made up of
+
+# Spring boot, mvn
+# Plantuml library to provide text to UML transformation.
+# Webix to provide web UI.
+# Orion to provide web text editor.
+
+h2. Run the project.
+
+This project managed by maven.
+
+bc(shell). mvn spring-boot:run
+
+h2. Support
+
+Hope this project helps you.
+Open a issue if any question.

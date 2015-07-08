@@ -1,0 +1,150 @@
+<!DOCTYPE html >
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Free text to UML image.</title>
+<meta name="description" content="text to image,code to uml,文本转图片" />
+<meta name="keywords" content="text to image" />
+
+  <script type="text/javascript" src="assets/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap.js"></script>
+<link rel="stylesheet" href=" assets/css/bootstrap.css" />
+<link rel="stylesheet" href=" assets/override.css" />
+<script type="text/javascript" src="index2.js"></script>
+
+<!-- mono font -->
+<!-- <script src="//use.typekit.net/iky7gec.js"></script>
+<script>try{Typekit.load();}catch(e){}</script> -->
+
+<!-- text editor -->
+<link rel="stylesheet" type="text/css"
+  href="assets/orion/built-editor.css" />
+<!-- <script src="http://eclipse.org/orion/editor/releases/current/built-editor.min.js"></script> -->
+<script src="assets/orion/built-editor.js"></script>
+</head>
+
+<body id="index">
+  <nav class="navbar navbar-default navbar-inverse">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed"
+          data-toggle="collapse"
+          data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span> <span
+            class="icon-bar"></span> <span class="icon-bar"></span> <span
+            class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#"><span
+          class="glyphicon glyphicon-blackboard"></span> Text to UML
+          image</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse"
+        id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="http://plantuml.com/" target="_blank">文档<span class="sr-only">(current)</span></a>
+          <li><a href="#" target="_blank">关于</a>
+        </ul>
+        <p class="navbar-text">
+          从文本生成UML图<small>在文本框输入文本，点击生成。</small>
+        </p>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 ">
+        <div class="btn-toolbar" role="toolbar"
+          aria-label="toolbar buttons">
+          <input class="btn btn-primary" data-uri="command:create"
+            type="button" value="生成" /> <label> <input
+            name="auto" type="checkbox"> 自动刷新
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <form action="generate" method="post">
+          <div class="form-group">
+            <label for="exampleInputEmail1">代码<span
+              class="glyphicon glyphicon-console"></span></label>
+<pre id="editor-box" class="tk-source-code-pro" id="editor" style="height:500px;">
+interface Service{
+   private Object  parser;
+   ----
+   public create(String buffer);
+}
+class {
+    void setLevelParam(String chars );
+    void setupLevel();
+    Comparator&lt;T&gt; getLevelComparator();
+    ------
+    getLevelComparator()
+    getLevelGraterThan(String)
+    setLevelOrder(String)
+    setupLevel(List)
+}
+ServiceImpl --> Service:关系
+</pre>
+            <textarea class="form-control hidden" rows="20" cols="80"
+              name="text">
+interface Service{
+   private Object  parser;
+   ----
+   public create(String buffer);
+}
+class ServiceImpl{
+    void setLevelParam(String chars );
+    void setupLevel();
+    Comparator&lt;T&gt; getLevelComparator();
+    ------
+    getLevelComparator()
+    getLevelGraterThan(String)
+    setLevelOrder(String)
+    setupLevel(List)
+}
+ServiceImpl --> Service:关系
+</textarea>
+          </div>
+          <input type="hidden" name="type" value="SVG" />
+        </form>
+      </div>
+      <div class="col-md-6">
+        <div>
+          <form>
+            <div class="form-group">
+              <label for="exampleInputEmail1">图片<span
+                class="glyphicon glyphicon-picture"></span></label>
+                <button class="btn btn-sm" type="button" data-uri="command:openSvgNewWindow">在新窗口打开</button>
+              <div id="preview" style="overflow:auto"
+                class=" thumbnail embed-responsive embed-responsive-4by3">
+
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <footer class="">
+    <div class="container">
+      <p>
+        Power by <span class="glyphicon glyphicon-new-window"></span>: <a
+          href="http://plantuml.sourceforge.net/index.html"
+          target="_blank"> Plantuml(a text to graphic library) </a>, <a>Orion
+          (a text editor)</a>.
+      </p>
+      <p>Version:${project.version}-${timestamp}</p>
+    </div>
+  </footer>
+</body>
+
+</html>
