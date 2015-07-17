@@ -29,6 +29,7 @@ import javax.servlet.ServletContext;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.cache.CacheManager;
@@ -57,6 +58,11 @@ import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 public class ApplicationSetup extends SpringBootServletInitializer
         implements ResourceLoaderAware, ApplicationContextAware,
         ServletContextAware {
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(ApplicationSetup.class);
+    }
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(ApplicationSetup.class, args);

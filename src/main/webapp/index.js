@@ -47,7 +47,7 @@ Devit.app.App = function() {
                     view : "toolbar",
                     elements : tb1
                 }, {
-                    template:template,
+                    template : template,
                 } ]
             }, {
                 view : "resizer"
@@ -78,6 +78,8 @@ Devit.app.App = function() {
         this.editor = orion.editor.edit({
             parent : "editor-box"
         });
+        this.editor.getTextView().addEventListener("Modify",
+                $.proxy(this.delayPreview, this));
         $('#editor-box').height("100%");
         window.editor = this.editor;
         /**
@@ -106,7 +108,18 @@ Devit.app.App = function() {
         }
     }
 
+    this.timeout = 0;
+    this.delayPreview = function() {
+        if (this.timeout == 0) {
+            this.timeout = setTimeout($.proxy(this.onCreate, this), 3000);
+        }
+    }
+
     this.onCreate = function() {
+        if (this.timeout > 0) {
+            clearTimeout(this.timeout);
+            this.timeout = 0;
+        }
         var text = this.editor.getText();
         this.$preview.load("generate svg", {
             text : text,
