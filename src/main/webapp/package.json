@@ -1,0 +1,21 @@
+{
+  "name": "planutml-editor",
+  "version": "0.1.0",
+  "description": "Online editor for planuml with preview feature.",
+  "main": "hello-world-server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified! Configure in package.json\" && exit 1"
+  },
+  "dependencies": {
+      "closure-library":"~1.4"
+  },
+  "repository": "",
+  "keywords": [
+    "node.js",
+    "eclipse",
+    "nodeclipse"
+  ],
+  "author": "",
+  "license": "MIT",
+  "readmeFilename": "README.md"
+}

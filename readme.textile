@@ -15,7 +15,7 @@ h2. Made up of
 
 # Spring boot, mvn
 # Plantuml library to provide text to UML transformation.
-# Webix to provide web UI.
+# Closure-library to provide web UI.
 # Orion to provide web text editor.
 
 h2. Run the project.
@@ -24,6 +24,12 @@ This project managed by maven.
 
 bc(shell). mvn spring-boot:run
 
+h2. Install and run
+
+bc. node_modules/closure-library/closure/bin/build/closurebuilder.py  --root=./  --namespace="cn.devit.util.PlantUmlEditor" --output_mode=compiled --compiler_jar=node_modules/google-closure-compiler/compiler.jar>goog_.js
+
+
+Note:
 h2. Support
 
 Hope this project helps you.

@@ -7,38 +7,165 @@
 <title>Free text to UML image.</title>
 <meta name="description" content="text to image,code to uml,文本转图片" />
 <meta name="keywords" content="text to image" />
-<script type="text/javascript" src="assets/jquery-1.9.1.js"></script>
 
-<link rel="stylesheet" href="webix/codebase/webix.css" type="text/css">
-<script src="webix/codebase/webix.js" type="text/javascript"
-  charset="utf-8"></script>
 
-<link rel="stylesheet" href=" assets/override.css" />
-<script type="text/javascript" src="index.js"></script>
-
+<script type="text/javascript" src="install.js"></script>
 
 <!-- mono font -->
 <!-- <script src="//use.typekit.net/iky7gec.js"></script>
 <script>try{Typekit.load();}catch(e){}</script> -->
+<style type="text/css">
+html, body {
+    height: 100%;
+}
 
-<!-- text editor -->
-<link rel="stylesheet" type="text/css"
-  href="assets/orion/built-editor.css" />
-<!-- <script src="http://eclipse.org/orion/editor/releases/current/built-editor.min.js"></script> -->
-<script src="assets/orion/built-editor.js"></script>
+.navbar {
+    margin-bottom: 0;
+}
+
+body {
+    display: flex;
+    flex-flow: column;
+}
+
+body>* {
+    width: 100%;
+}
+
+.main {
+    flex-grow: 1;
+    overflow: auto;
+}
+
+.row1 {
+    display: flex;
+    flex-flow: row;
+}
+
+.col1, .col2 {
+
+}
+
+#editor-box, #preview {
+    height: 100%;
+    padding: 1px;
+    margin: 0;
+}
+
+footer {
+    border-top: 1px solid black;
+}
+
+/* NOTE: A bug in Safari 3 requires these css definitions to be in here.
+       Do not move these to a seperate file without testing safari 3! */
+
+/* These are recommended styles for the default splitpane */
+.goog-splitpane {
+    height: 100%;
+    width: 100px;
+}
+
+.goog-splitpane-handle {
+    background: #f5f5f5;
+    position: absolute;
+}
+
+.goog-splitpane-handle-horizontal {
+    cursor: col-resize;
+}
+
+.goog-splitpane-handle-vertical {
+    cursor: row-resize;
+}
+
+.goog-splitpane-first-container, .goog-splitpane-second-container {
+    padding: 5px;
+    overflow: auto;
+    position: absolute;
+}
+</style>
+
 </head>
 
 <body id="index">
-  <div id="header">
-    <img src="favicon.png" width="32" align="top">Text to UML ,
-    freely .
+  <nav class="navbar navbar-default " style="margin-bottom: 0">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed"
+          data-toggle="collapse"
+          data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span> <span
+            class="icon-bar"></span> <span class="icon-bar"></span> <span
+            class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#"><span
+          class="glyphicon glyphicon-blackboard"></span> Text to UML
+          image</a>
+        <div></div>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse"
+        id="bs-example-navbar-collapse-1">
+        <form class="navbar-form navbar-left" role="search">
+          <input class="btn btn-primary btn-sm"
+            data-uri="command:create" type="button" value="生成" /> <label>
+            <input name="auto" type="checkbox" checked="checked">
+            自动刷新
+          </label>
+          <button class="btn btn-default btn-sm" type="button"
+            data-uri="command:openSvgNewWindow">在新窗口打开</button>
+        </form>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="http://plantuml.com/" target="_blank">文档<span
+              class="sr-only">(current)</span></a>
+          <li><a href="#" target="_blank">关于</a>
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+  </nav>
+  <div class="main" id="main1">
+    <div class='goog-splitpane' id='anotherSplitter'>
+      <div class='goog-splitpane-first-container'>
+        <pre id="editor-box" class="tk-source-code-pro" id="editor"
+          style="">
+interface Service{
+   private Object  parser;
+   ----
+   public create(String buffer);
+}
+class ServiceImpl{
+    void setLevelParam(String chars );
+    void setupLevel();
+    Comparator&lt;T&gt; getLevelComparator();
+    ------
+    getLevelComparator()
+    getLevelGraterThan(String)
+    setLevelOrder(String)
+    setupLevel(List)
+}
+ServiceImpl --&gt; Service:关系
+</pre>
+      </div>
+      <div class='goog-splitpane-second-container'>
+        <div id="preview" style="overflow: auto" class=" thumbnail">
+        </div>
+      </div>
+      <div class='goog-splitpane-handle'></div>
+    </div>
   </div>
-  <div id="powerby">
-    Powered by : <a href="http://plantuml.sourceforge.net/"
-      target="_blank">PlantUml</a> , <a href="https://orionhub.org/"
-      target="_blank">Orion</a> , <a href="http://webix.com"
-      target="_blank">Webix</a> . Version: ${project.version}-${timestamp} , fork at github. author:Alex.
-  </div>
+  <footer class="">
+    <div class="container-fluid">
+      <p>
+        Power by : <a href="http://plantuml.sourceforge.net/index.html"
+          target="_blank"> Plantuml </a>, <a>Orion </a>. Author : Alex.
+       Fork at github. Version : ${project.version}-${timestamp}
+      </p>
+    </div>
+  </footer>
 </body>
 
 </html>

@@ -1,94 +1,70 @@
-Devit = {};
-Devit.ui = {};
-Devit.app = {};
+/**
+ * Online UML editor made up of PlanUML , Orion and Closure.
+ *
+ * @author lxb
+ *
+ */
+goog.require('goog.dom');
+goog.require('goog.events');
+goog.require('goog.ui.Component');
+goog.require('goog.ui.Ratings');
+goog.require('goog.ui.ServerChart');
+goog.require('goog.ui.SplitPane');
+goog.require('goog.ui.SplitPane.Orientation');
+goog.require('goog.dom.ViewportSizeMonitor');
 
-Devit.app.App = function() {
-    'use strict'
+goog.provide("cn.devit.util.PlantUmlEditor");
 
-    this.init = function(work, input, $el) {
-        this.$el = $el;
+/**
+ *
+ * @param site
+ * @param parent
+ * @param input
+ *
+ */
+cn.devit.util.PlantUmlEditor = function() {
 
-        function a1() {
-            app.onCreate();
-        }
+    this.init = function(site, parent, input) {
+        this.$el = parent;
 
-        function o1() {
-            app.onOpenSvgNewWindow();
-        }
-
-        var tb1 = [ {
-            view : 'label',
-            label : 'Code <span class="webix_icon fa-code"></span>'
-        }, {
-            gravity : 2
-        }, {
-            view : "button",
-            type : "iconButton",
-            icon : "picture-o",
-            label : "refresh",
-            click : $.proxy(this.onCreate, this)
-        } ]
-        var tb2 = [ {
-            view : 'label',
-            template : 'Picture <span class="webix_icon fa-picture-o"></span>'
-        }, {
-            gravity : 2
-        }, {
-            view : "button",
-            type : "iconButton",
-            icon : "share-square-o",
-            label : "new win",
-            click : $.proxy(this.onOpenSvgNewWindow, this)
-        } ]
-        var template = '<pre id="editor-box" class="tk-source-code-pro" style="box-sizing: content-box; margin: 0;"></pre>';
-        var row1 = {
-            cols : [ {
-                rows : [ {
-                    view : "toolbar",
-                    elements : tb1
-                }, {
-                    template : template,
-                } ]
-            }, {
-                view : "resizer"
-            }, {
-                rows : [ {
-                    view : 'toolbar',
-                    elements : tb2
-                }, {
-                    id : 'preview',
-                    scroll : 'xy',
-                    template : 'preview'
-                } ]
-            } ]
-        }
-        webix.ui({
-            rows : [ {
-                type : "header",
-                content : "header"
-            }, row1, {
-                height : 32,
-                content : 'powerby'
-            } ]
-        });
-        this.$preview = $($$('preview').getNode());
+        this.$preview = $('#preview');
 
         // TODO dpendencey.
         // webix.markup.init();
         this.editor = orion.editor.edit({
             parent : "editor-box"
         });
+
+        var lhs = new goog.ui.Component();
+        var rhs = new goog.ui.Component();
+
+        // Set up splitpane with already existing DOM.
+        var splitpane1 = new goog.ui.SplitPane(lhs, rhs,
+                goog.ui.SplitPane.Orientation.HORIZONTAL);
+
+        $main = $("#main1");
+        // splitpane1.setInitialSize(100%);
+        splitpane1.setInitialSize($main.width() / 2);
+        splitpane1.setHandleSize(10);
+        splitpane1.decorate(document.getElementById('anotherSplitter'));
+        splitpane1.setSize(new goog.math.Size($main.width(), $main.height()));
+
+        // Start listening for viewport size changes.
+        var vsm = new goog.dom.ViewportSizeMonitor();
+        goog.events.listen(vsm, goog.events.EventType.RESIZE,
+                function(e) {
+                    splitpane1.setSize(new goog.math.Size($main.width(), $main
+                            .height()));
+                    // updateUi(vsm.getSize());
+                });
         this.editor.getTextView().addEventListener("Modify",
                 $.proxy(this.delayPreview, this));
-        $('#editor-box').height("100%");
-        window.editor = this.editor;
-        /**
-         * @type {HTMLFormElement}
-         */
-        this.form = $('form').get(0);
-        $el.on('click.cmd', '[data-uri^="command:"]', $.proxy(this.command,
+
+        this.$el.on('click.cmd', '[data-uri^="command:"]', $.proxy(this.command,
                 this));
+
     }
+
     this.command = function(event) {
         event.preventDefault();
         event.stopPropagation();
@@ -135,9 +111,11 @@ Devit.app.App = function() {
         target.document.write(svg);
         target.document.close();
     }
+
+
 }
 
 $(function() {
-    window.app = new Devit.app.App()
-    app.init(null, null, $('body'))
-});
+    var ins = new cn.devit.util.PlantUmlEditor();
+    ins.init(null,$('body'),null);
+})
