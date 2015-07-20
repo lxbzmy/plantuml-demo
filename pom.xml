@@ -9,6 +9,10 @@
     <groupId>cn.devit.util</groupId>
     <artifactId>plantuml</artifactId>
     <version>0.1.0-SNAPSHOT</version>
+
+    <properties>
+        <timestamp>${maven.build.timestamp}</timestamp>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>net.sourceforge.plantuml</groupId>
@@ -48,7 +52,7 @@
             <artifactId>spring-context-support</artifactId>
         </dependency>
 
-         <!-- test scope-->
+        <!-- test scope -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -79,6 +83,22 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <excludes>node_modules/**</excludes>
+                    <webResources>
+                        <resource>
+                            <directory>src/main/webapp</directory>
+                            <filtering>true</filtering>
+                            <includes>
+                                <include>index.html</include>
+                            </includes>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
                 <executions>
@@ -93,9 +113,21 @@
                                 <resource>
                                     <directory>src/main/webapp</directory>
                                     <targetPath>static</targetPath>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>index.html</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>src/main/webapp</directory>
+                                    <targetPath>static</targetPath>
                                     <includes>
                                         <include>**</include>
                                     </includes>
+                                    <excludes>
+                                        <exclude>node_modules/**</exclude>
+                                        <exclude>index.html</exclude>
+                                    </excludes>
                                 </resource>
                             </resources>
                         </configuration>

@@ -2,88 +2,100 @@
 <html>
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Free text to UML image.</title>
-<meta name="description" content="text to image,code to uml,文本转图片" />
-<meta name="keywords" content="text to image" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free text to UML image.</title>
+  <meta name="description" content="text to image,code to uml,文本转图片" />
+  <meta name="keywords" content="text to image" />
 
 
-<script type="text/javascript" src="install.js"></script>
+  <script type="text/javascript" src="install.js"></script>
 
-<!-- mono font -->
-<!-- <script src="//use.typekit.net/iky7gec.js"></script>
-<script>try{Typekit.load();}catch(e){}</script> -->
-<style type="text/css">
-html, body {
-    height: 100%;
-}
-
-.navbar {
-    margin-bottom: 0;
-}
-
-body {
-    display: flex;
-    flex-flow: column;
-}
-
-body>* {
-    width: 100%;
-}
-
-.main {
-    flex-grow: 1;
-    overflow: auto;
-}
-
-.row1 {
-    display: flex;
-    flex-flow: row;
-}
-
-.col1, .col2 {
-
-}
-
-#editor-box, #preview {
-    height: 100%;
-    padding: 1px;
-    margin: 0;
-}
-
-footer {
-    border-top: 1px solid black;
-}
-
-/* NOTE: A bug in Safari 3 requires these css definitions to be in here.
+  <!-- mono font -->
+  <script src="//use.typekit.net/iky7gec.js"></script>
+  <script>
+    try {
+      Typekit.load();
+    } catch (e) {}
+  </script>
+  <style type="text/css">
+    html,
+    body {
+      height: 100%;
+    }
+    
+    .navbar {
+      margin-bottom: 0;
+    }
+    
+    body {
+      display: flex;
+      flex-flow: column;
+    }
+    
+    body>* {
+      width: 100%;
+    }
+    
+    .main {
+      flex-grow: 1;
+      overflow: auto;
+    }
+    
+    .row1 {
+      display: flex;
+      flex-flow: row;
+    }
+    
+    .col1,
+    .col2 {}
+    
+    #editor-box,
+    #preview {
+      height: 100%;
+      padding: 1px;
+      margin: 0;
+    }
+    
+    footer {
+      border-top: 1px solid black;
+    }
+    
+    .github-btn {
+      overflow: hidden;
+      border: 0;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    /* NOTE: A bug in Safari 3 requires these css definitions to be in here.
        Do not move these to a seperate file without testing safari 3! */
-
-/* These are recommended styles for the default splitpane */
-.goog-splitpane {
-    height: 100%;
-    width: 100px;
-}
-
-.goog-splitpane-handle {
-    background: #f5f5f5;
-    position: absolute;
-}
-
-.goog-splitpane-handle-horizontal {
-    cursor: col-resize;
-}
-
-.goog-splitpane-handle-vertical {
-    cursor: row-resize;
-}
-
-.goog-splitpane-first-container, .goog-splitpane-second-container {
-    padding: 5px;
-    overflow: auto;
-    position: absolute;
-}
-</style>
+    /* These are recommended styles for the default splitpane */
+    
+    .goog-splitpane {
+      height: 100%;
+      width: 100px;
+    }
+    
+    .goog-splitpane-handle {
+      background: #f5f5f5;
+      position: absolute;
+    }
+    
+    .goog-splitpane-handle-horizontal {
+      cursor: col-resize;
+    }
+    
+    .goog-splitpane-handle-vertical {
+      cursor: row-resize;
+    }
+    
+    .goog-splitpane-first-container,
+    .goog-splitpane-second-container {
+      padding: 5px;
+      overflow: auto;
+      position: absolute;
+    }
+  </style>
 
 </head>
 
@@ -92,35 +104,52 @@ footer {
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed"
-          data-toggle="collapse"
-          data-target="#bs-example-navbar-collapse-1">
-          <span class="sr-only">Toggle navigation</span> <span
-            class="icon-bar"></span> <span class="icon-bar"></span> <span
-            class="icon-bar"></span>
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="#"><span
           class="glyphicon glyphicon-blackboard"></span> Text to UML
-          image</a>
+          </a>
         <div></div>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse"
-        id="bs-example-navbar-collapse-1">
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-left">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-book"></span> Templates <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href=""> Sequence</a>
+              <li><a href=""> State</a>
+              <li><a href=""> Activity</a>
+              <li><a href=""> Activity(new)</a>
+              <li><a href=""> Component</a>
+              <li><a href=""> Use case</a>
+              <li><a href=""> Class</a>
+              <li><a href=""> Object</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
         <form class="navbar-form navbar-left" role="search">
-          <input class="btn btn-primary btn-sm"
-            data-uri="command:create" type="button" value="生成" /> <label>
-            <input name="auto" type="checkbox" checked="checked">
-            自动刷新
+          <button class="btn btn-primary btn-sm" data-uri="command:create" type="button"><span class="glyphicon glyphicon-refresh"></span> 生成</button>
+          <label>
+            <input name="auto" type="checkbox" checked="checked"> 自动刷新
           </label>
-          <button class="btn btn-default btn-sm" type="button"
-            data-uri="command:openSvgNewWindow">在新窗口打开</button>
+          <button class="btn btn-default btn-sm" type="button" data-uri="command:openSvgNewWindow"><span class="glyphicon glyphicon-fullscreen"></span> 在新窗口打开</button>
         </form>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="http://plantuml.com/" target="_blank">文档<span
-              class="sr-only">(current)</span></a>
-          <li><a href="#" target="_blank">关于</a>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-question-sign"></span> Help <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#"><span class="glyphicon glyphicon-heart"></span> About Me</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="http://plantuml.com/" target="_blank"><span class="glyphicon glyphicon-new-window"></span> Planuml Site</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </div>
       <!-- /.navbar-collapse -->
@@ -130,8 +159,7 @@ footer {
   <div class="main" id="main1">
     <div class='goog-splitpane' id='anotherSplitter'>
       <div class='goog-splitpane-first-container'>
-        <pre id="editor-box" class="tk-source-code-pro" id="editor"
-          style="">
+        <pre id="editor-box" class="tk-source-code-pro" id="editor" style="">
 interface Service{
    private Object  parser;
    ----
@@ -159,10 +187,9 @@ ServiceImpl --&gt; Service:关系
   </div>
   <footer class="">
     <div class="container-fluid">
-      <p>
-        Power by : <a href="http://plantuml.sourceforge.net/index.html"
-          target="_blank"> Plantuml </a>, <a>Orion </a>. Author : Alex.
-       Fork at github. Version : ${project.version}-${timestamp}
+      <p style="line-height:30px;margin:0">
+        Powerd by : <a href="http://plantuml.com/" target="_blank"> Plantuml </a>, <a href="https://orionhub.org/" target="_blank">Orion </a>. Author : Alex. Version : ${project.version}-${timestamp}
+        <iframe class="github-btn" style="" src="https://ghbtns.com/github-btn.html?user=lxbzmy&amp;repo=plantuml-demo&amp;type=fork&amp;count=true" width="102" height="20" title="Fork on GitHub"></iframe>
       </p>
     </div>
   </footer>
