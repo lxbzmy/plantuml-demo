@@ -1,0 +1,98 @@
+'http://plantuml.com/sequence.html for syntax document
+title __功能__ CAS Browser Single-Signon Sequence Diagram
+
+actor user
+participant Browser as B
+participant "CAS Server" as cas
+participant "Protedted App" as app
+participant "Protedted App#2" as app2
+
+== First Access ==
+user -> B: Goto "app"
+activate B
+B -> app: GET https://app.example.com
+app -> B:302 Location:https://cas.example.com/cas/login?\nservice=https:3A%2F%2Fapp.example.com%2F
+B -> cas: GET https://cas.example.com/cas/login?\nservice=https:3A%2F%2Fapp.example.com%2F
+note right:User does not have an SSO session so present login form
+activate B
+cas --> B: CAS login form
+B -> user:Display CAS login form
+activate user
+user -->B:Submit CAS login form
+deactivate user
+B -> cas:POST https://cas.example.com/cas/login?\nservice=https:3A%2F%2Fapp.example.com%2F
+note right: username,password,and login ticket are POSTed in then body
+cas -> cas: Authenticated user
+note right: User is authenticated so create Single-signon(SSO) session \nCASTGC cookie contains the Ticket Granting Ticket(TGT) \nThe TGT is the session key for then users SSO session
+cas --> B:Set-Cookie:CASTGC=TGT-98765\n302 Location:https://app.example.com/?\nticket=ST-12345678
+deactivate B
+B -> app:GET https://app.example.com/?ticket=ST-12345678
+note right: Protected app validates Service \nTicket(ST) at CAS server over http
+activate app
+app -> cas:GET https://cas.example.com/serviceValidate?\nservice=https:3A%2F%2Fapp.example.com%2F\n&ticket=ST-12345678
+activate cas
+cas -> app:200[XML content]
+note left
+  CAS return an XML document which includes
+  an indication of success,the authenticated
+  subject,and optionally attributes.
+end note
+note right
+  Set then session cookie and forward
+  the browser back to then application with
+  the service ticket stripped off
+  The optional step prevents the browser
+  address basr from display the ST
+end note
+deactivate cas
+deactivate app
+app -> B:Set-Cookie:JSESSIONID=ABC12345\n302 Location:https://app.example.com/
+B -> app:Cookie:JSESSIONID=ABC12345 GET https://app.example.com/
+activate app
+app -> app :Validate session cookie
+app -> B :200[Content of https://app.example.com]
+deactivate app
+B -> user:display app
+deactivate B
+
+== Secoond Access To Same Application ==
+user -> B :request resource
+activate B
+B -> app:Cookie:JSESSIONID=ABC1234567\nGET https://app.example.com/resource
+activate app
+note right:Session cookie is sent\nalong with the request.
+app -> app:Validate session cookie
+app -> B:"200[Resource Content]"
+deactivate app
+B -> user : Display resource
+deactivate B
+
+== First Access Second Application ==
+
+user -> B: Goto "app2"
+activate B
+B -> app2:GET https://app2.example.com
+app2 --> B:302 Location:https://cas.example.com/cas/login?\nservice=https://app2.example.com/
+activate B
+B -> cas:Cookie:CASTGC=TGT-2345678\nGET https://cas.example.com/cas/login?\nservice=https://app2.example.com/
+activate cas
+cas -> cas :Valicate TGT
+note right
+  CAS validates then TGT so no login is required
+end note
+cas -> B:Location:https://app2.example.com/?\nticket=ST-12345678
+deactivate cas
+deactivate B
+B -> app2:GET https://app2.example.com/?ticket=ST-345678
+activate app2
+app2 -> cas:GET https://cas.example.com/serviceValidate?\nservice=https://app2.example.com/\n&ticket=ST-12345678
+cas --> app2:200[XML Content]
+app2 -> B:Set-Cookie:MOD_AUTH_CAS_S=XYZ1234567\n302 Location:https://app2.example.com/
+deactivate app2
+B -> app2:Cookie:MODE_AUTH_CAS_S=XYZ1234567 GET https//app2.example.com/
+activate app2
+app2 -> app2:Validate session cookie
+app2 --> B:200[Content of https://app2.example.com]
+deactivate app2
+B -> user:dispaly "app2"
+deactivate B
