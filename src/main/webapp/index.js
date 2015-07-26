@@ -15,22 +15,24 @@ goog.require('goog.dom.ViewportSizeMonitor');
 
 goog.provide("cn.devit.util.PlantUmlEditor");
 
-/**
- *
- * @param site
- * @param parent
- * @param input
- *
- */
 cn.devit.util.PlantUmlEditor = function() {
 
+    /**
+     *
+     * @param site
+     *            应用实例，上下文；
+     * @param parent
+     *            容器，在这个DIV中布局；
+     * @param input
+     *            输入参数；
+     *
+     */
     this.init = function(site, parent, input) {
         this.$el = parent;
 
         this.$preview = $('#preview');
 
         // TODO dpendencey.
-        // webix.markup.init();
         this.editor = orion.editor.edit({
             parent : "editor-box"
         });
@@ -42,26 +44,24 @@ cn.devit.util.PlantUmlEditor = function() {
         var splitpane1 = new goog.ui.SplitPane(lhs, rhs,
                 goog.ui.SplitPane.Orientation.HORIZONTAL);
 
-        $main = $("#main1");
+        var $main = $('#main1');
         // splitpane1.setInitialSize(100%);
         splitpane1.setInitialSize($main.width() / 2);
         splitpane1.setHandleSize(10);
-        splitpane1.decorate(document.getElementById('anotherSplitter'));
-        splitpane1.setSize(new goog.math.Size($main.width(), $main.height()));
+        splitpane1.decorate(goog.dom.$('anotherSplitter'));
+        splitpane1.setSize(new goog.math.Size($main.width(),$main.height()));
 
         // Start listening for viewport size changes.
         var vsm = new goog.dom.ViewportSizeMonitor();
-        goog.events.listen(vsm, goog.events.EventType.RESIZE,
-                function(e) {
-                    splitpane1.setSize(new goog.math.Size($main.width(), $main
-                            .height()));
-                    // updateUi(vsm.getSize());
-                });
+        goog.events.listen(vsm, goog.events.EventType.RESIZE, function(e) {
+            splitpane1.setSize(new goog.math.Size($main.width(), $main.height()));
+            // updateUi(vsm.getSize());
+        });
         this.editor.getTextView().addEventListener("Modify",
                 $.proxy(this.delayPreview, this));
 
-        this.$el.on('click.cmd', '[data-uri^="command:"]', $.proxy(this.command,
-                this));
+        this.$el.on('click.cmd', '[data-uri^="command:"]', $.proxy(
+                this.command, this));
 
     }
 
@@ -82,6 +82,28 @@ cn.devit.util.PlantUmlEditor = function() {
             alert('配置错误，data-uri=command:' + cmd + '的处理程序' + handler + '，没有在类型'
                     + this + '中定义');
         }
+    }
+
+    /**
+     *
+     * @param {Event}
+     *            event;
+     *
+     *
+     */
+    this.onExample = function(event) {
+//    	event.target; 在哪个元素上点击的
+//    	event.relatedTarget; 相关元素，比如a上有监听，但是a下还是span，如果span点击了，target=span,relatedTarget=a
+        var $a = $(event.target).closest('a');
+        var type = $a.text().trim().toLocaleLowerCase();
+
+        $.ajax("examples/" + type + ".txt", {
+            type : "GET",
+            dataType : 'text'
+        }).done($.proxy(function(text) {
+            this.editor.setText(text);
+        }, this));
+
     }
 
     this.timeout = 0;
@@ -112,10 +134,9 @@ cn.devit.util.PlantUmlEditor = function() {
         target.document.close();
     }
 
-
 }
 
 $(function() {
     var ins = new cn.devit.util.PlantUmlEditor();
-    ins.init(null,$('body'),null);
+    ins.init(null, $('body'), null);
 })
