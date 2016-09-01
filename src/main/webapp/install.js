@@ -33,7 +33,7 @@ app = pathname.split("/").pop().replace(/.html?$/, '');
 // \'unsafe-inline\' \'unsafe-eval\'">')
 
 // for all apps.
-js("/node_modules/closure-library/closure/goog/base.js");
+//js("/node_modules/closure-library/closure/goog/base.js");
 
 js("/assets/jquery-1.9.1.js");
 js("/assets/js/bootstrap.js")
@@ -42,6 +42,10 @@ css("/assets/override.css")
 
 css("/assets/orion/built-editor.css")
 js("/assets/orion/built-editor.js")
+
+//explode{
+js("/node_modules/google-closure-library/closure/goog/base.js");
+//}
 
 // for controller js.
 js("/" + pathname.split('/').pop().replace(/.html?$/, ".js"));

@@ -34,7 +34,8 @@ cn.devit.util.PlantUmlEditor = function() {
 
         // TODO dpendencey.
         this.editor = orion.editor.edit({
-            parent : "editor-box"
+            parent : "editor-box",
+            theme:'assets/orion/themes/eclipse'
         });
 
         var lhs = new goog.ui.Component();
@@ -54,8 +55,8 @@ cn.devit.util.PlantUmlEditor = function() {
         // Start listening for viewport size changes.
         var vsm = new goog.dom.ViewportSizeMonitor();
         goog.events.listen(vsm, goog.events.EventType.RESIZE, function(e) {
-            splitpane1.setSize(new goog.math.Size($main.width(), $main.height()));
-            // updateUi(vsm.getSize());
+          var size = new goog.math.Size($main.width(), $main.height());
+          splitpane1.setSize(size);
         });
         this.editor.getTextView().addEventListener("Modify",
                 $.proxy(this.delayPreview, this));

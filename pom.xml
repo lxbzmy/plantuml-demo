@@ -57,18 +57,18 @@
             <artifactId>spring-webmvc</artifactId>
             <version>4.0.7.RELEASE</version>
         </dependency>
-            <dependency>
-      <groupId>org.apache.tomcat.embed</groupId>
-      <artifactId>tomcat-embed-logging-juli</artifactId>
-      <version>8.0.15</version>
-      <scope>test</scope>
-    </dependency>
-            <dependency>
-                <groupId>javax</groupId>
-                <artifactId>javaee-web-api</artifactId>
-                <version>7.0</version>
-                <scope>provided</scope>
-            </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-logging-juli</artifactId>
+            <version>8.0.15</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
     <profiles>
     </profiles>
@@ -82,18 +82,77 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>mkdir web-compress</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${project.basedir}</workingDirectory>
+                            <executable>mkdir</executable>
+                            <arguments>
+                                <argument>-p</argument>
+                                <argument>${project.build.directory}/web-compress/</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>Closure compress</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${project.basedir}/src/main/webapp</workingDirectory>
+                            <executable>node_modules/google-closure-library/closure/bin/build/closurebuilder.py</executable>
+                            <arguments>
+                                <argument>--root=./</argument>
+                                <argument>--namespace=cn.devit.util.PlantUmlEditor</argument>
+                                <argument>--output_mode=compiled</argument>
+                                <argument>--compiler_jar=node_modules/google-closure-compiler/compiler.jar</argument>
+                                <argument>--output_file=${project.build.directory}/web-compress/index.js</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>Comment explod js</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${project.basedir}/src/main/webapp</workingDirectory>
+                            <executable>sed</executable>
+                            <arguments>
+                                <argument>/\/\/explode.$/N;s/\n//</argument>
+                                <argument>install.js</argument>
+                            </arguments>
+                            <outputFile>${project.build.directory}/web-compress/install.js</outputFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
                     <excludes>node_modules/**</excludes>
                     <webResources>
-                        <resource>
+                     <!-- 提示：资源复制不会被覆盖，先占先得 -->
+                        <webResource>
                             <directory>src/main/webapp</directory>
                             <filtering>true</filtering>
                             <includes>
                                 <include>index.html</include>
                             </includes>
-                        </resource>
+                        </webResource>
+                        <webResource>
+                            <directory>${project.build.directory}/web-compress/</directory>
+                        </webResource>
                     </webResources>
                 </configuration>
             </plugin>

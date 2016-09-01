@@ -26,11 +26,21 @@ bc(shell). mvn spring-boot:run
 
 h2. Install and run
 
-bc. node_modules/closure-library/closure/bin/build/closurebuilder.py  --root=./  --namespace="cn.devit.util.PlantUmlEditor" --output_mode=compiled --compiler_jar=node_modules/google-closure-compiler/compiler.jar>goog_.js
+bc. node_modules/google-closure-library/closure/bin/build/closurebuilder.py  --root=./  --namespace="cn.devit.util.PlantUmlEditor" --output_mode=compiled --compiler_jar=node_modules/google-closure-compiler/compiler.jar>index_.js
 
 
 Note:
+
 h2. Support
 
 Hope this project helps you.
 Open a issue if any question.
+
+h2. Technique Note
+
+Build Lifecycle
+
+|_.  phase |_. doing |
+| prepare-package    | compress src js into web-compress |
+|/2. package         | web-compress as resource folder   |  
+                     |            filter ing index.html  |
