@@ -13,6 +13,29 @@ goog.require('goog.ui.SplitPane');
 goog.require('goog.ui.SplitPane.Orientation');
 goog.require('goog.dom.ViewportSizeMonitor');
 
+//Tool bar
+goog.require('goog.ui.Button');
+goog.require('goog.ui.ButtonSide');
+goog.require('goog.ui.Component.EventType');
+goog.require('goog.ui.Component.State');
+goog.require('goog.ui.Menu');
+goog.require('goog.ui.MenuItem');
+goog.require('goog.ui.Option');
+goog.require('goog.ui.SelectionModel');
+goog.require('goog.ui.Separator');
+goog.require('goog.ui.Toolbar');
+goog.require('goog.ui.ToolbarButton');
+goog.require('goog.ui.ToolbarMenuButton');
+goog.require('goog.ui.ToolbarRenderer');
+goog.require('goog.ui.ToolbarSelect');
+goog.require('goog.ui.ToolbarSeparator');
+goog.require('goog.ui.ToolbarToggleButton');
+
+goog.require('goog.ui.Dialog');
+goog.require('goog.html.SafeHtml');
+
+
+
 goog.provide("cn.devit.util.PlantUmlEditor");
 
 cn.devit.util.PlantUmlEditor = function() {
@@ -29,6 +52,35 @@ cn.devit.util.PlantUmlEditor = function() {
      */
     this.init = function(site, parent, input) {
         this.$el = parent;
+      var __ = this;
+      
+      
+        var tb = new goog.ui.Toolbar();
+        tb.decorate(goog.dom.getElement('t2'));
+        tb.setEnabled(true);
+       function bbb(e){
+         //XXX 改造不用__
+         var caption = e.target.getId();
+         var $dom = $(e.target.element_);
+         if($dom.data('uri')!=null){
+           e.preventDefault();
+           e.stopPropagation();
+           __.command({currentTarget:$dom.get(0)})
+         }else if($dom.parent().data('uri') != null){
+           e.preventDefault();
+           e.stopPropagation();
+           __.command({currentTarget:$dom.parent().get(0),target:$dom.get(0)})
+           
+         }else{
+           
+//          if (typeof e.target.getCaption == 'function' && e.target.getCaption()) {
+//            caption += ' (' + e.target.getCaption() + ')';
+//         }
+//         console.log(caption , e.type);
+         }
+         
+       }
+        goog.events.listen(tb,goog.ui.Component.EventType.ACTION, bbb);
 
         this.$preview = $('#preview');
 
@@ -60,15 +112,34 @@ cn.devit.util.PlantUmlEditor = function() {
         });
         this.editor.getTextView().addEventListener("Modify",
                 $.proxy(this.delayPreview, this));
+      
+//        this.$el.on('click.cmd', '[data-uri^="command:"]', $.proxy(
+//                this.command, this));
 
-        this.$el.on('click.cmd', '[data-uri^="command:"]', $.proxy(
-                this.command, this));
-
+    }
+    
+    
+    
+    this.onShowAboutMe = function(){
+      
+      if(!this.dlg){
+        var dialog1 = new goog.ui.Dialog();
+        dialog1.setModal(true);
+        dialog1.setSafeHtmlContent(goog.html.SafeHtml.htmlEscape(
+        'UML Graphic Generator, Author:alex. Powered by:goog closure,plantuml,spring framework'
+        ));
+        dialog1.setTitle('About');        dialog1.setButtonSet(goog.ui.Dialog.ButtonSet.createOk());
+        this.dlg = dialog1;
+      }
+      
+      this.dlg.setVisible(true);
+      this.dlg.getElement().style.zIndex = 100;
+      
     }
 
     this.command = function(event) {
-        event.preventDefault();
-        event.stopPropagation();
+        //event.preventDefault();
+        //event.stopPropagation();
         var $btn = $(event.currentTarget);
         /**
          * @type String
@@ -95,7 +166,7 @@ cn.devit.util.PlantUmlEditor = function() {
     this.onExample = function(event) {
 //    	event.target; 在哪个元素上点击的
 //    	event.relatedTarget; 相关元素，比如a上有监听，但是a下还是span，如果span点击了，target=span,relatedTarget=a
-        var $a = $(event.target).closest('a');
+        var $a = $(event.target)//.closest('a');
         var type = $a.text().trim().toLocaleLowerCase();
 
         $.ajax("examples/" + type + ".txt", {

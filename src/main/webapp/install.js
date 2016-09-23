@@ -32,16 +32,26 @@ app = pathname.split("/").pop().replace(/.html?$/, '');
 // content="default-src \'self\' http://182.92.7.14/ ;script-src \'self\'
 // \'unsafe-inline\' \'unsafe-eval\'">')
 
-// for all apps.
-//js("/node_modules/closure-library/closure/goog/base.js");
+
+//merge{
+css("/assets/css/goog/menu.css");
+css("/assets/css/goog/common.css");
+css("/assets/css/goog/menuitem.css");
+css("/assets/css/goog/menuseparator.css");
+css("/assets/css/goog/toolbar.css");
+css("/assets/css/goog/dialog.css");
+//}
 
 js("/assets/jquery-1.9.1.js");
-js("/assets/js/bootstrap.js")
-css("/assets/css/bootstrap.css");
+//js("/assets/js/bootstrap.js")
+//css("/assets/css/bootstrap.css");
 css("/assets/override.css")
+css("/assets/fonts/glyphicon.css")
 
 css("/assets/orion/built-editor.css")
 js("/assets/orion/built-editor.js")
+
+
 
 //explode{
 js("/node_modules/google-closure-library/closure/goog/base.js");

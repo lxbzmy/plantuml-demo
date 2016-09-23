@@ -1,22 +1,29 @@
 package cn.devit.util.plantuml;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
-
 import java.io.File;
 import java.net.MalformedURLException;
 
 import javax.servlet.ServletException;
 
-import org.apache.catalina.*;
+import org.apache.catalina.Context;
+import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
-import org.junit.*;
-import org.junit.runner.RunWith;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.SocketUtils;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * 验证程序能够在中间件中启动无误，提前发现集成异常
+ * <p>
+ *
+ *
+ * @author lxb
+ *
+ */
 public class ApplicationSetupTest {
 
     private static int freePort;
@@ -33,6 +40,7 @@ public class ApplicationSetupTest {
 
         String webappDirLocation = "src/main/webapp/";
         tomcat = new Tomcat();
+        tomcat.setBaseDir("target/tomcat");
 
         // Bind the port to Tomcat server
         tomcat.setPort(freePort);

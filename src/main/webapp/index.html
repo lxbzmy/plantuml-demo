@@ -20,6 +20,8 @@
     }
 </script>
 <style type="text/css">
+
+  
 html, body {
     height: 100%;
 }
@@ -31,10 +33,6 @@ html, body {
 body {
     display: flex;
     flex-flow: column;
-}
-
-body>* {
-    width: 100%;
 }
 
 .main {
@@ -90,80 +88,67 @@ footer {
 
 .goog-splitpane-first-container, .goog-splitpane-second-container {
     padding: 5px;
-    overflow: auto;
+    /*overflow: auto;*/
     position: absolute;
 }
+  .modal-dialog-bg{
+    z-index: 99;
+  }
+  .modal-dialog{
+    z-index: 100;
+  }
+  p{
+    font-size: 9pt;
+  }
 </style>
 
 </head>
 
 <body id="index">
-  <nav class="navbar navbar-default " style="margin-bottom: 0">
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed"
-          data-toggle="collapse"
-          data-target="#bs-example-navbar-collapse-1">
-          <span class="sr-only">Toggle navigation</span> <span
-            class="icon-bar"></span> <span class="icon-bar"></span> <span
-            class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#"><span
-          class="glyphicon glyphicon-blackboard"></span> Text to UML </a>
-        <div></div>
+  <div id="t2" class="goog-toolbar goog-toolbar-disabled">
+      <div class="goog-toolbar-button goog-toolbar-button-disabled">
+        <div class="icon glyphicon glyphicon-blackboard"></div>
+        <span style="vertical-align:middle">Text to UML</span>
       </div>
-
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse"
-        id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-left">
-          <li class="dropdown"><a href="#" class="dropdown-toggle"
-            data-toggle="dropdown" role="button" aria-haspopup="true"
-            aria-expanded="false"> <span
-              class="glyphicon glyphicon-book"></span> Templates <span
-              class="caret"></span>
-          </a>
-            <ul class="dropdown-menu" data-uri="command:example">
-              <li><a href="#"> Sequence</a>
-              <li><a href="#"> Activity</a>
-              <li><a href="#"> State</a>
-              <li><a href="#"> Component</a>
-              <li><a href="#"> Use case</a>
-              <li><a href="#"> Class</a>
-            </ul></li>
-        </ul>
-        <form class="navbar-form navbar-left" role="search">
-          <button class="btn btn-default btn-sm"
-            data-uri="command:create" type="button">
-            <span class="glyphicon glyphicon-refresh"></span> 生成
-          </button>
-          <button class="btn btn-default btn-sm" type="button"
-            data-uri="command:openSvgNewWindow">
-            <span class="glyphicon glyphicon-fullscreen"></span> 在新窗口打开
-          </button>
-        </form>
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown"><a href="#" class="dropdown-toggle"
-            data-toggle="dropdown" role="button" aria-haspopup="true"
-            aria-expanded="false"> <span
-              class="glyphicon glyphicon-question-sign"></span> Help <span
-              class="caret"></span>
-          </a>
-            <ul class="dropdown-menu">
-              <li><a href="#"><span
-                  class="glyphicon glyphicon-heart"></span> About Me</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="http://plantuml.com/" target="_blank"><span
-                  class="glyphicon glyphicon-new-window"></span> Planuml
-                  Site</a></li>
-            </ul></li>
-        </ul>
+      <hr>
+      <div class="goog-toolbar-menu-button">
+        <div class="icon glyphicon glyphicon-book"></div>
+        Templates
+        <div id="decoratedMenu" class="goog-menu" data-uri="command:example">
+          <div class="goog-menuitem">Sequence</div>
+          <div class="goog-menuitem">Activity</div>
+          <div class="goog-menuitem">State</div>
+          <div class="goog-menuitem">Component</div>
+          <div class="goog-menuitem">Use case</div>
+          <div class="goog-menuitem">Class</div>
+        </div>
       </div>
-      <!-- /.navbar-collapse -->
+      <hr>
+      <div class="goog-toolbar-button" data-uri="command:create">
+        <div class="glyphicon glyphicon-refresh icon"></div>
+        <span style="vertical-align:middle">生成图片</span>
+      </div>
+      <div class="goog-toolbar-button" data-uri="command:openSvgNewWindow">
+        <div class="glyphicon glyphicon-fullscreen icon"></div>
+        <span style="vertical-align:middle">在新窗口打开</span>
+      </div>
+      <hr>
+      <div class="goog-toolbar-menu-button">
+        <div class="icon glyphicon glyphicon-question-sign"></div>
+        Help
+        <div id="decoratedMenu" class="goog-menu">
+          <div class="goog-menuitem" data-uri="command:showAboutMe">
+            <div class="icon glyphicon glyphicon-heart"></div>
+            <span style="vertical-align:middle">About</span>
+          </div>
+          <div class="goog-menuitem">
+            <div class="icon glyphicon glyphicon-new-window"></div>
+            <a href="http://plantuml.com/"><span style="vertical-align:middle">Plantuml Site</span></a></div>
+        </div>
+      </div>
     </div>
-    <!-- /.container-fluid -->
-  </nav>
+  
+  
   <div class="main" id="main1">
     <div class='goog-splitpane' id='anotherSplitter'>
       <div class='goog-splitpane-first-container'>
@@ -200,11 +185,9 @@ ServiceImpl --&gt; Service:关系
         Powerd by : <a href="http://plantuml.com/" target="_blank">
           Plantuml </a>, <a href="https://orionhub.org/" target="_blank">Orion
         </a>. Author : Alex. Version : ${project.version}-${timestamp}
-<!--
         <iframe class="github-btn" style=""
           src="https://ghbtns.com/github-btn.html?user=lxbzmy&amp;repo=plantuml-demo&amp;type=fork&amp;count=true"
           width="102" height="20" title="Fork on GitHub"></iframe>
--->
       </p>
     </div>
   </footer>
