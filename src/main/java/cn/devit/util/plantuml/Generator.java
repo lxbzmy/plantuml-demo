@@ -69,6 +69,12 @@ public class Generator extends HttpServlet {
         source += "\n@enduml\n";
         SourceStringReader reader = new SourceStringReader(source);
         // Write the first image to "png"
+        /*
+         * string 返回的是一个结果
+         * (2 activities)
+         * 如果有错误那么返回的是
+         * (Error)
+         */
         String desc = reader.generateImage(png, new FileFormatOption(type));
     }
 

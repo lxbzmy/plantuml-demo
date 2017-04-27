@@ -1,5 +1,8 @@
 package cn.devit.util.plantuml;
 
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.*;
+
 import java.io.File;
 import java.net.MalformedURLException;
 
@@ -12,12 +15,13 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.SocketUtils;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * 验证程序能够在中间件中启动无误，提前发现集成异常
+ * 验证：程序能够在中间件中启动无误，提前发现集成异常
  * <p>
  *
  *
@@ -66,13 +70,13 @@ public class ApplicationSetupTest {
     @Before
     public void setUp() {
     }
-
+    
     @Test
     public void testHome() throws Exception {
         RestTemplate rest = new RestTemplate();
         ResponseEntity<String> response = rest.getForEntity(
                 "http://localhost:" + freePort + "/plantuml/", String.class);
-        // assertThat(response.getBody(), is("world."));
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
     }
 
     @AfterClass

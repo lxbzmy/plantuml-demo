@@ -33,8 +33,9 @@ goog.require('goog.ui.ToolbarToggleButton');
 
 goog.require('goog.ui.Dialog');
 goog.require('goog.html.SafeHtml');
-
-
+//html5 local storage
+goog.require('goog.storage.Storage');
+goog.require('goog.storage.mechanism.mechanismfactory');
 
 goog.provide("cn.devit.util.PlantUmlEditor");
 
@@ -52,9 +53,8 @@ cn.devit.util.PlantUmlEditor = function() {
      */
     this.init = function(site, parent, input) {
         this.$el = parent;
-      var __ = this;
-      
-      
+        var __ = this;
+        this.storage = new goog.storage.Storage(goog.storage.mechanism.mechanismfactory.create())
         var tb = new goog.ui.Toolbar();
         tb.decorate(goog.dom.getElement('t2'));
         tb.setEnabled(true);
@@ -83,12 +83,17 @@ cn.devit.util.PlantUmlEditor = function() {
         goog.events.listen(tb,goog.ui.Component.EventType.ACTION, bbb);
 
         this.$preview = $('#preview');
+        
 
         // TODO dpendencey.
         this.editor = orion.editor.edit({
             parent : "editor-box",
             theme:'assets/orion/themes/eclipse'
         });
+        if(this.storage.get("saved")){
+        	this.editor.setText(this.storage.get("saved"));
+        }
+        
 
         var lhs = new goog.ui.Component();
         var rhs = new goog.ui.Component();
@@ -191,6 +196,7 @@ cn.devit.util.PlantUmlEditor = function() {
             this.timeout = 0;
         }
         var text = this.editor.getText();
+        this.storage.set("saved",text)
         this.$preview.load("generate svg", {
             text : text,
             type : 'SVG'

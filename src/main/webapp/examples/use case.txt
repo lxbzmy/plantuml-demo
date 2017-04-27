@@ -1,0 +1,46 @@
+@startuml
+
+title 饭店
+left to right direction
+skinparam packageStyle rect
+
+actor Waiter
+actor Client
+actor Cashier
+actor Chef
+
+usecase UC1 as "多行文字也可以哦😯
+--
+Several separators are possible.
+==
+And you can add titles:
+..Conclusion..
+This allows large description."
+
+rectangle "System Doundary" {
+
+  Waiter -- (Order Food): receive order
+  Waiter -- (Serve Food): place order
+  Waiter -- (Pay for Food): facilitafe payment
+  
+  
+  Client -- (Eat Food)
+  (Eat Food) <.. (Drink Wine): <<extend>>
+  Client -- (Order Food)
+  Client -- (Pay for Food) :pay
+  
+  Cashier -- (Pay for Food):accept payment
+  
+  
+  (Order Food) <.. (Order Wine) :<<extend>>
+  (Serve Food) <.. (Serve Wine) :<<extened>>
+  note right of "Serve Wine" : {if wine was ordered}
+
+  
+  (Order Food) -- Chef : confirm order
+  (Cook Food) -- Chef
+  UC1 -- Chef
+}
+
+
+@enduml

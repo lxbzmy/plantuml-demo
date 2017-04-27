@@ -44,3 +44,9 @@ Build Lifecycle
 | prepare-package    | compress src js into web-compress |
 |/2. package         | web-compress as resource folder   |  
                      |            filter ing index.html  |
+
+                     
+h2. TODO
+
+logo 点击出about
+help 连接到 wiki，显示                     

@@ -25,6 +25,7 @@ public class PlantumlTest {
         SourceStringReader reader = new SourceStringReader(source);
         // Write the first image to "png"
         String desc = reader.generateImage(png);
+        System.out.println(desc);
         System.out.println(png.getCount());
         // Return a null string if no generation
         assertThat(desc, notNullValue());
