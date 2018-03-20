@@ -50,7 +50,7 @@ css("/assets/fonts/glyphicon.css")
 
 css("/assets/orion/built-editor.css")
 js("/assets/orion/built-editor.js")
-
+js("/assets/orion/contentAssist/cssContentAssist.min.js")
 
 
 //explode{
