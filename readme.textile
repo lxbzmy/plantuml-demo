@@ -26,9 +26,11 @@ bc(shell). mvn spring-boot:run
 
 h2. Install and run
 
-bc. node_modules/google-closure-library/closure/bin/build/closurebuilder.py  --root=./  --namespace="cn.devit.util.PlantUmlEditor" --output_mode=compiled --compiler_jar=node_modules/google-closure-compiler/compiler.jar>index_.js
+bc(shell). mvn package
 
+all source file including js will packaged. 
 
+and we need python to compress js files.
 Note:
 
 h2. Support
@@ -49,6 +51,29 @@ h2. 代码提示
 
 点击alt+/ 或者 ctrl+空格 或者 ctrl+space+空格 可以显示代码提示。
 
+支持的代码提示有：
 
+# usecase，用例图
+## 角色 -> 活动：actor
+## ${actor} --> (${usecase}) : ${label}
+## actor :${Last actor}: as ${alias}
+# sequence，顺序图
+## ${actor1} -> ${actor2}: ${operation}
+## participant ${display name} as ${alias}
+# 公共
+## title ${title}
+## note
+# 其他关键字
+# --> 竖
+# -> 横
+# :
+# >
 
+其他关键字
+title
+actor
+usecase
+right
+left
+note
                     
