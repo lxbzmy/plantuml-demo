@@ -125,40 +125,8 @@ cn.devit.util.PlantUmlEditor = function() {
 
     }
     
-    this.contentAssist = function(){
-        function PlantUmlAsist(){
-            
-        }
-
-        /**
-        * @param {Object} editorContext
-        * @param {Object} options
-        * @param {String} options.delimiter
-        * computeContentAssist(editorContext, options)
-        editorContext ObjectReference The Editor Context object.
-        options Object
-        options.delimiter String The line delimiter being used in the editor (CRLF, LF, etc.)
-        options.indentation String The leading whitespace at the start of the line.
-        options.line String The text of the line.
-        options.offset Number The offset at which content assist is being requested. Relative to the document.
-        options.prefix String The substring extending from the first non-word character preceding the editing caret up to the editing caret. This may give a clue about what the user was in the process of typing. It can be used to narrow down the results to be returned. The prefix is just a guess; it is not appropriate for all types of document, depending on their syntax rules.
-        options.selection orion.editor.Selection The current selection in the editor.
-        options.tab String The tab character being used in the editor. Typical values are a Tab character, or a sequence of four spaces.
-
-        */
-        PlantUmlAsist.prototype.computeProposals = function(buffer, offset, context) {
-          
-          return [
-            {proposal:'->',description:''},
-            {proposal:'-->',description:''},
-            {proposal:' : ',description:''},
-            {proposal:'>',description:'>'},
-            {proposal:'note right: ',description:'备注，右边'},
-            {proposal:'note left: ',description:'备注，左边'}
-          ]
-        }
+    this.contentAssist = function(){        
         return new PlantUmlAsist();
-
     }
     
     

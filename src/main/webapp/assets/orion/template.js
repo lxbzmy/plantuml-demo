@@ -1,4 +1,4 @@
-var template = function() { //$NON-NLS-0$
+var Template = function() { //$NON-NLS-0$
 
     /** 
      * Removes prefix from string.
