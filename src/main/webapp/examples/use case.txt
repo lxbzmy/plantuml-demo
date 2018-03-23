@@ -1,46 +1,21 @@
 @startuml
-
-title 饭店
 left to right direction
 skinparam packageStyle rect
 
-actor Waiter
-actor Client
-actor Cashier
-actor Chef
+title 饭店和外卖
+actor 快递员
+actor 美团
+actor 白领
+actor 饭店
+快递员 --> (到饭店收餐)
+快递员 --> (送餐到楼下)
 
-usecase UC1 as "多行文字也可以哦😯
---
-Several separators are possible.
-==
-And you can add titles:
-..Conclusion..
-This allows large description."
+白领 --> (网上点餐)
+白领 --> (确定收餐，评价)
 
-rectangle "System Doundary" {
+饭店 --> (做饭)
+饭店 --> (通知快递员)
 
-  Waiter -- (Order Food): receive order
-  Waiter -- (Serve Food): place order
-  Waiter -- (Pay for Food): facilitafe payment
-  
-  
-  Client -- (Eat Food)
-  (Eat Food) <.. (Drink Wine): <<extend>>
-  Client -- (Order Food)
-  Client -- (Pay for Food) :pay
-  
-  Cashier -- (Pay for Food):accept payment
-  
-  
-  (Order Food) <.. (Order Wine) :<<extend>>
-  (Serve Food) <.. (Serve Wine) :<<extened>>
-  note right of "Serve Wine" : {if wine was ordered}
+美团 --> (收到订单，确认交易)
+美团 --> (转发给饭店)
 
-  
-  (Order Food) -- Chef : confirm order
-  (Cook Food) -- Chef
-  UC1 -- Chef
-}
-
-
-@enduml
