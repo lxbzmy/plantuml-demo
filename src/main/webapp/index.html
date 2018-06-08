@@ -132,6 +132,11 @@ footer {
         <div class="glyphicon glyphicon-fullscreen icon"></div>
         <span style="vertical-align:middle">在新窗口打开</span>
       </div>
+      <div class="goog-toolbar-button" data-uri="command:openPngNewWindow">
+        <div class="glyphicon glyphicon-picture icon"></div>
+        <span style="vertical-align:middle">生成PNG</span>
+      </div>
+      
       <hr>
       <div class="goog-toolbar-menu-button">
         <div class="icon glyphicon glyphicon-question-sign"></div>
@@ -179,6 +184,10 @@ ServiceImpl --&gt; Service:关系
       <div class='goog-splitpane-handle'></div>
     </div>
   </div>
+  <form id="png_" action="generate" target="_blank" method="post">
+    <input name="text" value="" type="hidden">
+    <input name="type" value="PNG" type="hidden">
+  </form>
   <footer class="">
     <div class="container-fluid">
       <p style="line-height: 30px; margin: 0">

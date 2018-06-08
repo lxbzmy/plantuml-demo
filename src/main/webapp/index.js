@@ -218,6 +218,15 @@ cn.devit.util.PlantUmlEditor = function() {
         target.document.close();
     }
 
+    this.onOpenPngNewWindow = function() {
+        var form = $("#png_").get(0);
+        form.elements['text'].value = this.editor.getText();
+        form.submit();
+    }
+    
+    
+    
+
 }
 
 $(function() {
