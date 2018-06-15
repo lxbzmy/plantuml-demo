@@ -7,10 +7,10 @@
     "test": "echo \"Error: no test specified! Configure in package.json\" && exit 1"
   },
   "dependencies": {
-      "google-closure-library":"20160822.0.0"
+    "google-closure-library": "20160822.0.0"
   },
   "devDependencies": {
-    "google-closure-compiler": "20150609.0.0"
+    "google-closure-compiler": "^20180506.0.0"
   },
   "repository": "",
   "keywords": [
