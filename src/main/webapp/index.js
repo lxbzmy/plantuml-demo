@@ -136,8 +136,8 @@ cn.devit.util.PlantUmlEditor = function() {
       if(!this.dlg){
         var dialog1 = new goog.ui.Dialog();
         dialog1.setModal(true);
-        dialog1.setSafeHtmlContent(goog.html.SafeHtml.htmlEscape(
-        'UML Graphic Generator, Author:alex. Powered by:goog closure,plantuml,spring framework'
+        dialog1.setSafeHtmlContent(goog.html.SafeHtml.htmlEscapePreservingNewlines(
+        'UML Graphic Generator.\nAuthor: alex. Powered by: google closure, plantuml, spring framework.'
         ));
         dialog1.setTitle('About');        dialog1.setButtonSet(goog.ui.Dialog.ButtonSet.createOk());
         this.dlg = dialog1;
